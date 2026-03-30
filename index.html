@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nar Kids Garden — Private Kindergarten</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:        #1B2D4F;
+      --navy-deep:   #111E36;
+      --warm:        #E8A87C;
+      --warm-light:  #FBF0E8;
+      --white:       #FFFFFF;
+      --bg:          #F9F8F6;
+      --text:        #1A1A1A;
+      --text-mid:    #374151;
+      --text-muted:  #6B7280;
+      --border:      #E5E7EB;
+      --border-soft: #F0EFed;
+      --radius:      8px;
+      --radius-lg:   14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Language toggle ── */
+    [data-mn] { display: none; }
+    body.mn [data-en] { display: none; }
+    body.mn [data-mn] { display: inline; }
+    /* block-level overrides */
+    body.mn [data-mn].block { display: block; }
+    body.mn [data-en].block { display: none; }
+    [data-mn].block         { display: none; }
+
+    /* ════════════════════════════════
+       TOP BAR
+    ════════════════════════════════ */
+    .topbar {
+      background: var(--navy-deep);
+      color: rgba(255,255,255,0.68);
+      font-size: 12.5px;
+      font-weight: 400;
+      letter-spacing: 0.1px;
+      padding: 9px 0;
+    }
+    .topbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .topbar a {
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+    .topbar a:hover { color: #fff; }
+    .topbar-phone {
+      color: rgba(255,255,255,0.82);
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+    @media (max-width: 600px) {
+      .topbar-left { display: none; }
+    }
+
+    /* ════════════════════════════════
+       HEADER
+    ════════════════════════════════ */
+    .header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      transition: box-shadow 0.2s;
+    }
+    .header.scrolled {
+      box-shadow: 0 2px 20px rgba(27,45,79,0.09);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 28px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* Brand */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+    }
+    .brand-name {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+      letter-spacing: -0.3px;
+    }
+    .brand-sub {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      margin-top: 1px;
+    }
+
+    /* Nav */
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .nav a {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-mid);
+      text-decoration: none;
+      padding: 6px 13px;
+      border-radius: 6px;
+      transition: color 0.18s, background 0.18s;
+      white-space: nowrap;
+    }
+    .nav a:hover {
+      color: var(--navy);
+      background: var(--bg);
+    }
+
+    /* Header right */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    /* Language switcher */
+    .lang-sw {
+      display: flex;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      overflow: hidden;
+    }
+    .lang-sw button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 5px 10px;
+      color: var(--text-muted);
+      transition: background 0.15s, color 0.15s;
+      letter-spacing: 0.4px;
+    }
+    .lang-sw button.active {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    /* CTA button */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.18s;
+      border: none;
+      white-space: nowrap;
+    }
+    .btn-navy {
+      background: var(--navy);
+      color: #fff;
+      padding: 9px 20px;
+      font-size: 13.5px;
+    }
+    .btn-navy:hover { background: var(--navy-deep); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      padding: 9px 20px;
+      font-size: 13.5px;
+      border: 1.5px solid var(--navy);
+    }
+    .btn-outline:hover { background: var(--navy); color: #fff; }
+
+    .btn-lg {
+      padding: 13px 26px;
+      font-size: 14.5px;
+      border-radius: 9px;
+    }
+
+    .btn-full {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* Burger */
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .burger span {
+      display: block;
+      width: 21px;
+      height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+    }
+
+    /* Mobile drawer */
+    .mobile-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      z-index: 300;
+      flex-direction: column;
+      padding: 24px 28px 36px;
+    }
+    .mobile-drawer.open { display: flex; }
+    .drawer-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 36px;
+    }
+    .drawer-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 22px;
+      color: var(--text-mid);
+      line-height: 1;
+      padding: 4px;
+    }
+    .drawer-links {
+      display: flex;
+      flex-direction: column;
+    }
+    .drawer-links a {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--navy);
+      text-decoration: none;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .drawer-foot {
+      margin-top: auto;
+      padding-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Responsive header */
+    @media (max-width: 900px) {
+      .nav { display: none; }
+    }
+    @media (max-width: 640px) {
+      .burger { display: flex; }
+      .btn-navy.header-cta { display: none; }
+    }
+
+    /* ════════════════════════════════
+       HERO
+    ════════════════════════════════ */
+    .hero {
+      background: var(--white);
+      padding: 72px 0 64px;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* Hero left */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--warm-light);
+      color: #B5703A;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 5px 13px;
+      border-radius: 100px;
+      margin-bottom: 22px;
+    }
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--warm);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .hero-h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(32px, 4.2vw, 50px);
+      font-weight: 400;
+      color: var(--navy);
+      line-height: 1.14;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 34px;
+      max-width: 460px;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 42px;
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .hero-stat {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px 15px;
+    }
+    .stat-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.9px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .stat-val {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+
+    /* Hero right */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .hero-photo-wrap {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .hero-photo {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #D9DDE6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-photo-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: #8C94A6;
+      letter-spacing: 0.5px;
+    }
+    .hero-photo-label {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(255,255,255,0.93);
+      border: 1px solid rgba(255,255,255,0.7);
+      backdrop-filter: blur(6px);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* Info card */
+    .hero-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px 24px;
+      box-shadow: 0 2px 14px rgba(27,45,79,0.07);
+    }
+    .hero-card-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .hero-card-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .card-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 18px;
+    }
+    .card-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .card-row:last-child { border-bottom: none; }
+    .card-row-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .card-row-val {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* Responsive hero */
+    @media (max-width: 860px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .hero-h1 { font-size: clamp(28px, 7vw, 42px); }
+    }
+    @media (max-width: 480px) {
+      .hero { padding: 48px 0 52px; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; }
+      .hero-btns .btn { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR ── -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-left">
+      <span data-en>Admissions support available Monday–Friday</span>
+      <span data-mn>Даваа–Баасан бүртгэлийн мэдээлэл авах боломжтой</span>
+    </span>
+    <div class="topbar-right">
+      <a href="#contact">
+        <span data-en>Book a visit</span>
+        <span data-mn>Танилцах уулзалт авах</span>
+      </a>
+      <a href="tel:+97699112233" class="topbar-phone">+976 9911 2233</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── HEADER ── -->
+<header class="header" id="header">
+  <div class="header-inner">
+
+    <!-- Brand -->
+    <a href="#" class="brand">
+      <svg class="brand-logo" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="19" cy="19" r="19" fill="#1B2D4F"/>
+        <text x="19" y="24" text-anchor="middle"
+              font-family="'Instrument Serif', serif"
+              font-size="17" fill="#E8A87C" font-weight="400">N</text>
+      </svg>
+      <div>
+        <div class="brand-name">Nar Kids Garden</div>
+        <div class="brand-sub">
+          <span data-en>Private Kindergarten · Demo</span>
+          <span data-mn>Хувийн цэцэрлэг · Demo</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="nav">
+      <a href="#about">
+        <span data-en>About</span>
+        <span data-mn>Бидний тухай</span>
+      </a>
+      <a href="#ages">
+        <span data-en>Age Groups</span>
+        <span data-mn>Насны ангилал</span>
+      </a>
+      <a href="#schedule">
+        <span data-en>Schedule</span>
+        <span data-mn>Хуваарь</span>
+      </a>
+      <a href="#faq">
+        <span data-en>FAQ</span>
+        <span data-mn>Асуулт</span>
+      </a>
+      <a href="#contact">
+        <span data-en>Contact</span>
+        <span data-mn>Холбоо барих</span>
+      </a>
+    </nav>
+
+    <!-- Right -->
+    <div class="header-right">
+      <div class="lang-sw">
+        <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+        <button id="btn-mn" onclick="setLang('mn')">MN</button>
+      </div>
+      <a href="#contact" class="btn btn-navy header-cta">
+        <span data-en>Enquire Now</span>
+        <span data-mn>Лавлах</span>
+      </a>
+      <button class="burger" id="burger" onclick="openDrawer()" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<!-- ── MOBILE DRAWER ── -->
+<div class="mobile-drawer" id="drawer">
+  <div class="drawer-head">
+    <div class="brand-name" style="font-size:17px;color:var(--navy);">Nar Kids Garden</div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <nav class="drawer-links">
+    <a href="#about" onclick="closeDrawer()">
+      <span data-en>About</span><span data-mn>Бидний тухай</span>
+    </a>
+    <a href="#ages" onclick="closeDrawer()">
+      <span data-en>Age Groups</span><span data-mn>Насны ангилал</span>
+    </a>
+    <a href="#schedule" onclick="closeDrawer()">
+      <span data-en>Schedule</span><span data-mn>Хуваарь</span>
+    </a>
+    <a href="#faq" onclick="closeDrawer()">
+      <span data-en>FAQ</span><span data-mn>Асуулт</span>
+    </a>
+    <a href="#contact" onclick="closeDrawer()">
+      <span data-en>Contact</span><span data-mn>Холбоо барих</span>
+    </a>
+  </nav>
+  <div class="drawer-foot">
+    <a href="#contact" class="btn btn-navy btn-lg btn-full" onclick="closeDrawer()">
+      <span data-en>Enquire Now</span><span data-mn>Лавлах</span>
+    </a>
+  </div>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <!-- Left -->
+    <div class="hero-left">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        <span data-en>Admissions Open</span>
+        <span data-mn>Бүртгэл нээлттэй</span>
+      </div>
+
+      <h1 class="hero-h1">
+        <span data-en>A warm and structured early years environment for children aged 2–6</span>
+        <span data-mn>2–6 настай хүүхдүүдэд зориулсан дулаан, тайван, зохион байгуулалттай орчин</span>
+      </h1>
+
+      <p class="hero-sub">
+        <span data-en>Program, age groups, daily routine, location and contact details — clearly presented in one place for parents.</span>
+        <span data-mn>Хөтөлбөр, насны ангилал, өдөр тутмын хуваарь, байршил, холбоо барих мэдээллийг эцэг эхчүүдэд нэг дор ойлгомжтой харуулна.</span>
+      </p>
+
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-navy btn-lg">
+          <span data-en>Book a Visit</span>
+          <span data-mn>Танилцах уулзалт авах</span>
+        </a>
+        <a href="https://m.me/" class="btn btn-outline btn-lg">
+          <span data-en>Message on Messenger</span>
+          <span data-mn>Messenger-ээр бичих</span>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="stat-label">
+            <span data-en>Age</span>
+            <span data-mn>Нас</span>
+          </div>
+          <div class="stat-val">
+            <span data-en>2–6 years</span>
+            <span data-mn>2–6 нас</span>
+          </div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-label">
+            <span data-en>Format</span>
+            <span data-mn>Формат</span>
+          </div>
+          <div class="stat-val">
+            <span data-en>Full day &amp; half day</span>
+            <span data-mn>Бүтэн ба хагас өдөр</span>
+          </div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-label">
+            <span data-en>Location</span>
+            <span data-mn>Байршил</span>
+          </div>
+          <div class="stat-val">
+            <span data-en>Bayanzurkh District</span>
+            <span data-mn>Баянзүрх дүүрэг</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="hero-right">
+
+      <!-- Photo placeholder -->
+      <div class="hero-photo-wrap">
+        <div class="hero-photo">
+          <span class="hero-photo-text">Real photo</span>
+        </div>
+        <div class="hero-photo-label">
+          <span data-en>Parent-friendly information</span>
+          <span data-mn>Эцэг эхэд ойлгомжтой мэдээлэл</span>
+        </div>
+      </div>
+
+      <!-- Info card -->
+      <div class="hero-card">
+        <div class="hero-card-title">
+          <span data-en>Request information</span>
+          <span data-mn>Мэдээлэл авах</span>
+        </div>
+        <p class="hero-card-desc">
+          <span data-en>A calm, clean example of how a kindergarten can present important details clearly for families.</span>
+          <span data-mn>Цэцэрлэг хамгийн чухал мэдээллээ илүү цэгцтэй, ойлгомжтой байдлаар харуулж болох цэвэр жишээ.</span>
+        </p>
+        <div class="card-rows">
+          <div class="card-row">
+            <div class="card-row-label">
+              <span data-en>What parents see</span>
+              <span data-mn>Эцэг эх юу харна</span>
+            </div>
+            <div class="card-row-val">
+              <span data-en>Daily routine, age groups and clear next steps</span>
+              <span data-mn>Өдөр тутмын хуваарь, насны бүлэг, дараагийн алхам</span>
+            </div>
+          </div>
+          <div class="card-row">
+            <div class="card-row-label">
+              <span data-en>Contact</span>
+              <span data-mn>Холбоо барих</span>
+            </div>
+            <div class="card-row-val">
+              <span data-en>Messenger and phone in one visible place</span>
+              <span data-mn>Messenger ба утас нэг дор харагдана</span>
+            </div>
+          </div>
+          <div class="card-row">
+            <div class="card-row-label">
+              <span data-en>Format</span>
+              <span data-mn>Формат</span>
+            </div>
+            <div class="card-row-val">
+              <span data-en>Simple, mobile-friendly and easy to share</span>
+              <span data-mn>Энгийн, гар утсанд эвтэйхэн, хуваалцахад амар</span>
+            </div>
+          </div>
+        </div>
+        <a href="#contact" class="btn btn-navy btn-full">
+          <span data-en>Ask About Registration</span>
+          <span data-mn>Бүртгэлийн талаар асуух</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  // Language
+  function setLang(lang) {
+    document.body.classList.toggle('mn', lang === 'mn');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-mn').classList.toggle('active', lang === 'mn');
+    document.documentElement.lang = lang;
+  }
+
+  // Sticky header shadow
+  window.addEventListener('scroll', function () {
+    document.getElementById('header').classList.toggle('scrolled', window.scrollY > 4);
+  }, { passive: true });
+
+  // Mobile drawer
+  function openDrawer() {
+    document.getElementById('drawer').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
+
+</body>
+</html>
